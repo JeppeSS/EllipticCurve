@@ -66,8 +66,6 @@ class Prime(object):
         return self.__number__
 
 
-
-
     def isPrime(self, numTest=50):
         p = self.__number__
 
@@ -84,7 +82,6 @@ class Prime(object):
             if (gcd(test, p) != 1):
                 return False
 
-            print(fermat(test, p))
             if fermat(test, p) != 1:
                 return False
 
