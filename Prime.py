@@ -81,7 +81,6 @@ class Prime(object):
         for i in range(numTest):
             test = random.randint(1, p - 1)
            
-            print(gcd(test, p))
             if (gcd(test, p) != 1):
                 return False
 
