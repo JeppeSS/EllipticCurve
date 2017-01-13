@@ -27,4 +27,10 @@ class EllipticCurve(object):
         discri = -16 * (((4 * self.geta()) ** 3) + ((27 * self.getb()) ** 2))
 
         return discri != 0
-        
+
+
+
+    def __repr__(self):
+        return '[y^2 = x^3 + %dx + %d]]' % (self.geta(), self.getb())
+
+
