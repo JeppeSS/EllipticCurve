@@ -1,11 +1,17 @@
+import EllipticCurve as EC
+
 class Point(object):
-    __x__ = None
-    __y__ = None
+    __x__  = None
+    __y__  = None
+
+    __EC__ = None
 
 
-    def __init__(self, x, y):
-        self.__x__ = x
-        self.__y__ = y
+    def __init__(self, curve, x, y):
+        self.__x__  = x
+        self.__y__  = y
+        
+        self.__EC__ = curve
 
 
     def getX(self):
