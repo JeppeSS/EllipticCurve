@@ -1,11 +1,16 @@
+import Prime as pri
+
 class EllipticCurve(object):
     
-    __a__ = None
-    __b__ = None
+    __a__     = None
+    __b__     = None
+    __prime__ = None
 
-    def __init__(self, a, b):
-        self.__a__ = a
-        self.__b__ = b
+    def __init__(self, a, b, prime):
+        self.__a__     = a
+        self.__b__     = b
+        self.__prime__ = prime
+
 
         if not self.satisfyCurve(self.__a__, self.__b__):
             raise Exception('The curve is not valid!')
