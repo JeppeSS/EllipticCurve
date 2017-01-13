@@ -13,6 +13,9 @@ class Point(object):
 
     def getY(self):
         return self.__y__
+    
+    def getCoords(self):
+        return (self.getX(), self.getY())
 
     def setX(self, x):
         self.__x__ = x
@@ -20,8 +23,10 @@ class Point(object):
     def setY(self, y):
         self.__y__ = y
 
-    def getCoords(self):
-        return (self.getX(), self.getY())
+    def setCoords(self, x, y):
+        self.__x__ = x
+        self.__y__ = y
+
 
     def __repr__(self):
         return '[x = %d, y = %d]' % (self.getX(), self.getY())
