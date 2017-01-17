@@ -36,5 +36,6 @@ class EllipticCurve(object):
 
 
     def __repr__(self):
-        return '[y^2 = x^3 + %dx + %d]]' % (self.geta(), self.getb())
+        return '[y^2 = x^3 + %dx + %d mod %d]]' % (self.geta(), self.getb()
+                                                 , self.getPrime())
 
