@@ -62,6 +62,10 @@ class Prime(object):
         self.__number__ = number
 
 
+        if not self.isPrime():
+            raise Exception('The prime is not valid!')
+
+
     def getNumber(self):
         return self.__number__
 
