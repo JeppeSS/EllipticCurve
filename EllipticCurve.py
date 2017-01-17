@@ -7,7 +7,7 @@ class EllipticCurve(object):
     def __init__(self, a, b, prime):
         self.__a__     = a
         self.__b__     = b
-        self.__prime__ = prime
+        self.__prime__ = prime.getNumber()
 
 
         if not self.satisfyCurve(self.__a__, self.__b__):
@@ -33,6 +33,12 @@ class EllipticCurve(object):
 
         return discri != 0
 
+
+    def pointTest(self, x, y):
+        yTest = (y * y) % self.getPrime()
+        xTest = (x ** 3) + self.geta() * x + self.getb()
+
+        return yTest == xTest
 
 
     def __repr__(self):
