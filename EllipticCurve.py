@@ -35,6 +35,10 @@ class EllipticCurve(object):
 
 
     def pointTest(self, x, y):
+
+        if x > self.getPrime() or y > self.getPrime():
+            raise Exception('Coordinates must be less than the prime')
+
         yTest = (y * y) % self.getPrime()
         xTest = (x ** 3) + self.geta() * x + self.getb()
 
