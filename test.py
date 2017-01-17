@@ -27,6 +27,26 @@ class TestEC(unittest.TestCase):
         self.assertTrue(pri.Prime(2))
         self.assertTrue(pri.Prime(15485863))
 
+    def test_EC(self):
+        with self.assertRaises(Exception) as context:
+            p = pri.Prime(13)
+            ec = EC.EllipticCurve(0, 0, p)
+
+
+        excep = 'The curve is not valid!'
+
+        self.assertTrue(excep in str(context.exception))
+
+
+    def test_ECPoint(self):
+        
+        p  = pri.Prime(13)
+        ec = EC.EllipticCurve(3, 8, p)
+
+        self.assertTrue(ec.pointTest(1, 5))
+        self.assertTrue(ec.pointTest(1, 8))
+
+
 
 if __name__ == '__main__':
     unittest.main()
