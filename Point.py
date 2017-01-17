@@ -1,4 +1,5 @@
 import EllipticCurve as EC
+import Prime as pri
 
 class Point(object):
     __x__  = None
@@ -12,6 +13,10 @@ class Point(object):
         self.__y__  = y
         
         self.__EC__ = curve
+
+
+        if not self.__EC__.pointTest(self.__x__, self.__y__):
+            raise Exception('The point is not valid!')
 
 
     def getX(self):
@@ -36,4 +41,3 @@ class Point(object):
 
     def __repr__(self):
         return '[x = %d, y = %d]' % (self.getX(), self.getY())
-
