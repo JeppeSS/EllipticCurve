@@ -1,5 +1,3 @@
-import Prime as pri
-
 class EllipticCurve(object):
     
     __a__     = None
@@ -15,12 +13,14 @@ class EllipticCurve(object):
         if not self.satisfyCurve(self.__a__, self.__b__):
             raise Exception('The curve is not valid!')
 
-
     def geta(self):
         return self.__a__
 
     def getb(self):
         return self.__b__
+
+    def getPrime(self):
+        return self.__prime__
 
     def satisfyCurve(self, a, b):
         """ SatisfyCurve is a check that needs to be done to exclude singular
@@ -37,5 +37,4 @@ class EllipticCurve(object):
 
     def __repr__(self):
         return '[y^2 = x^3 + %dx + %d]]' % (self.geta(), self.getb())
-
 
