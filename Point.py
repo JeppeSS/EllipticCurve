@@ -124,10 +124,3 @@ class Point(object):
 
 
 
-p = pri.Prime(3623)
-ec = EC.EllipticCurve(14, 19, p)
-point = Point(ec, 6, 730)
-
-print(point.double_and_add(947))
-
-
