@@ -51,11 +51,41 @@ class TestEC(unittest.TestCase):
         self.assertTrue(excep in str(context.exception))
 
 
-
-
         self.assertTrue(ec.pointTest(1, 5))
         self.assertTrue(ec.pointTest(1, 8))
         self.assertFalse(ec.pointTest(0, 11))
+
+
+    def test_EC_PointAdd(self):
+        p  = pri.Prime(13)
+        ec = EC.EllipticCurve(3, 8, p)
+
+        point1 = Point.Point(ec, 1, 5)
+        point2 = Point.Point(ec, 1, 8)
+        point3 = Point.Point(ec, 2, 3)
+        point4 = Point.Point(ec, 2, 10)
+        point5 = Point.Point(ec, 9, 6)
+        point6 = Point.Point(ec, 9, 7)
+        point7 = Point.Point(ec, 12, 2)
+        point8 = Point.Point(ec, 12, 11)
+        
+        with self.assertRaises(Exception) as context:
+            pFail = point1.add(point2)
+
+        
+        excep = 'If x1 == x2 the point does not exist'
+
+        self.assertTrue(excep in str(context.exception))
+
+
+        self.assertEqual(point1.add(point1), point4)
+        self.assertEqual(point1.add(point3), point2)
+        self.assertEqual(point1.add(point4), point6)
+        self.assertEqual(point1.add(point5), point3)
+        self.assertEqual(point1.add(point6), point7)
+        self.assertEqual(point1.add(point7), point8)
+        self.assertEqual(point1.add(point8), point5)
+
 
 if __name__ == '__main__':
     unittest.main()
