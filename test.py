@@ -87,5 +87,14 @@ class TestEC(unittest.TestCase):
         self.assertEqual(point1.add(point8), point5)
 
 
+    def test_doubleAndAdd(self):
+        p     = pri.Prime(3623)
+        ec    = EC.EllipticCurve(14, 19, p)
+        point = Point.Point(ec, 6, 730)
+        result = Point.Point(ec, 3492, 60)
+
+        self.assertEqual(point.double_and_add(947), result)
+
+
 if __name__ == '__main__':
     unittest.main()
