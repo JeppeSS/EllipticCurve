@@ -1,6 +1,18 @@
 import EllipticCurve as EC
 import Prime as pri
 
+
+
+def xgcd(j, p):
+    x0, x1, y0, y1 = 1, 0, 0, 1
+
+    while p != 0:
+        q, j, p = j // p, p, j % p
+        x0, x1 = x1, x0 - q * x1
+        y0, y1 = y1, y0 - q * y1
+
+    return j, x0, y0
+
 class Point(object):
     __x__  = None
     __y__  = None
@@ -37,6 +49,53 @@ class Point(object):
     def setCoords(self, x, y):
         self.__x__ = x
         self.__y__ = y
+
+    def __eq__(self, Q):
+        return (self.getX(), self.getY()) == (Q.getX(), Q.getY())
+
+    def div(self, i, j, p):
+        e = xgcd(j, p)
+        d = i * e[1]
+
+        return d % p
+
+    def add(self, Q):
+        if self.__eq__(Q):
+            return self.double()
+
+        if self.getX() == Q.getX():
+            raise Exception('If x1 == x2 the point does not exist')
+
+        curve = self.__EC__
+        prime = curve.getPrime()
+
+        sY = (self.getY() - Q.getY()) % prime
+        sX = (self.getX() - Q.getX()) % prime
+
+        s = self.div(sY, sX, prime)
+
+        rX = ((s ** 2) - self.getX() - Q.getX()) % prime
+        rY = (s * (self.getX() - rX) - self.getY()) % prime
+
+        return Point(curve, rX, rY)
+
+    def double(self):
+        curve = self.__EC__
+        prime = curve.getPrime()
+        a     = curve.geta()
+
+
+        sX = (3 * (self.getX() ** 2) + a)
+        sY = (2 * self.getY())
+
+        s = self.div(sX, sY, prime)
+
+
+        rX = ((s ** 2) - (2 * self.getX())) % prime
+        rY = (s * (self.getX() - rX) - self.getY()) % prime
+
+
+        return Point(curve, rX, rY)
 
 
     def __repr__(self):
