@@ -39,14 +39,23 @@ class TestEC(unittest.TestCase):
 
 
     def test_ECPoint(self):
-        
         p  = pri.Prime(13)
         ec = EC.EllipticCurve(3, 8, p)
+        
+        with self.assertRaises(Exception) as context:
+            pFail = ec.pointTest(20, 23)
+
+        
+        excep = 'Coordinates must be less than the prime'
+
+        self.assertTrue(excep in str(context.exception))
+
+
+
 
         self.assertTrue(ec.pointTest(1, 5))
         self.assertTrue(ec.pointTest(1, 8))
-
-
+        self.assertFalse(ec.pointTest(0, 11))
 
 if __name__ == '__main__':
     unittest.main()
