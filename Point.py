@@ -25,10 +25,10 @@ class Point(object):
         self.__y__  = y
         
         self.__EC__ = curve
-
-
-        if not self.__EC__.pointTest(self.__x__, self.__y__):
-            raise Exception('The point is not valid!')
+        
+        if x != 0 and y != 0:
+            if not self.__EC__.pointTest(self.__x__, self.__y__):
+                raise Exception('The point is not valid!')
 
 
     def getX(self):
@@ -62,6 +62,12 @@ class Point(object):
     def add(self, Q):
         if self.__eq__(Q):
             return self.double()
+
+        if self.getX() == 0 and self.getY() == 0:
+            return Q
+
+        if Q.getX() == 0 and Q.getY() == 0:
+            return self
 
         if self.getX() == Q.getX():
             raise Exception('If x1 == x2 the point does not exist')
@@ -98,5 +104,30 @@ class Point(object):
         return Point(curve, rX, rY)
 
 
+    def double_and_add(self, n):
+        Q = self
+        R = Point(self.__EC__, 0, 0)
+
+        while n > 0:
+
+            if n % 2 == 1:
+                R = R.add(Q)
+
+            Q = Q.double()
+            n = int(n / 2)
+
+
+        return R
+
     def __repr__(self):
         return '[x = %d, y = %d]' % (self.getX(), self.getY())
+
+
+
+p = pri.Prime(3623)
+ec = EC.EllipticCurve(14, 19, p)
+point = Point(ec, 6, 730)
+
+print(point.double_and_add(947))
+
+
