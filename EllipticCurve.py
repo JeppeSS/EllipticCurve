@@ -40,7 +40,7 @@ class EllipticCurve(object):
             raise Exception('Coordinates must be less than the prime')
 
         yTest = (y * y) % self.getPrime()
-        xTest = (x ** 3) + self.geta() * x + self.getb()
+        xTest = ((x ** 3) + self.geta() * x + self.getb()) % self.getPrime()
 
         return yTest == xTest
 
