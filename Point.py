@@ -85,6 +85,40 @@ class Point(object):
 
         return Point(curve, rX, rY)
 
+
+    def sub(self, x, y):
+
+
+        curve = self.__EC__
+        prime = curve.getPrime()
+
+        sY = (self.getY() - y) % prime
+        sX = (self.getX() - x) % prime
+
+        s = self.div(sY, sX, prime)
+
+        rX = ((s ** 2) - self.getX() - x) % prime
+        rY = (s * (self.getX() - rX) - self.getY()) % prime
+
+        return [rX, rY]
+
+
+    def sub2(self, x1, y1, x, y):
+
+
+        curve = self.__EC__
+        prime = curve.getPrime()
+
+        sY = (y1 - y) % prime
+        sX = (x1 - x) % prime
+
+        s = self.div(sY, sX, prime)
+
+        rX = ((s ** 2) - x1 - x) % prime
+        rY = (s * (x1 - rX) - y1) % prime
+
+        return [rX, rY]
+
     def double(self):
         curve = self.__EC__
         prime = curve.getPrime()
