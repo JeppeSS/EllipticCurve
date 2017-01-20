@@ -1,6 +1,17 @@
-Krypterings test:
+The foundation of modern society, begun as a project in the 1960's for the US Department of Defense and was originated for military purposes the project were later adopted by a British scientist, Tim Berners-Lee who changed the way communication and society works today. The World Wide Web was invented in 1989, and was originally developed to automate information shared between scientists in universities and institutes across the entire world. 
 
-Denne tekst må ikke kunne læses!!
+Society has become digitalized and the Internet influence the modern society in all aspects. Today this is known as the Internet of things (IoT) is the Inter-networking of physical devices, vehicles and other devices embedded with electronics, sensors, software and network connectivity that make it possible for these objects to collect and share data in-between. 
 
+The society has been progressively more efficient and the evolution of technology is extending to all corners of society and benefits everything from shopping convenience, paying bills, schools, trains, airplanes, storing personal information as well as communicate with people on the other side of the earth. Technology is constantly developing, and devices are also being produced at frequently lowering cost, devices are not a luxury anymore but available for the whole world.
 
-HEMMELIG BESKED.
+Almost daily the media report attacks against the public, or the private sector. These attacks are labeled as cyber attacks and often originates from what is called "black hat" hackers. These cyber attacks have many forms, Malware, Botnet, Distributed Denial of Service (DDoS) and attacks that focus on system bugs or errors like stack smashing.
+
+The motivation behind system attacks vary from political points to economic benefits, just for the sake of fun or by accident.
+
+As the use of the Internet expands annually, the amount of data flowing through is increasing and as the public sector gets further digitalized more personal information gets stored. This brings along genuine security issues.
+
+The security of communication and commence in a digital age relies on the modern incarnation of the ancient art of code and ciphers
+
+One security measure against hackers is cryptography, which is the art of writing / storing secret information from the hands of undesirable people.
+
+System security is a extensive subject, it seems to be difficult to implement secure systems and what defines a secure system. Building a secure system is not only about making the system secure against attacks, but to make the system dependable in the face of malice, error, or mischance.
