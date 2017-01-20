@@ -66,7 +66,7 @@ class ElGamal(object):
    
 
     def encrypt(self, data, key):
-        n = len(self.integerDigits(self.getPrime(), 65536)) - 1
+        n = len(self.integerDigits(self.getPrime(), 6000)) - 1
 
         data = list(map(int, data))
 
@@ -76,7 +76,7 @@ class ElGamal(object):
         bigInt = []
          
         for i in range(len(data)):
-            bigInt.append(self.fromDigits(data[i], 65536))
+            bigInt.append(self.fromDigits(data[i], 6000))
 
         if len(bigInt) % 2 != 0:
             bigInt.append(32)
@@ -126,7 +126,7 @@ class ElGamal(object):
 
         final = []
         for i in ps:
-            dt = self.integerDigits(i, 65536)
+            dt = self.integerDigits(i, 6000)
             dt = dt[::-1]
             final.append(dt)
             
