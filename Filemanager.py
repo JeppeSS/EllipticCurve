@@ -27,9 +27,11 @@ class Filemanager(object):
 
     def convertString(self, text):
         return ''.join(chr(i) for i in text)
+    
 
     def convertAscii(self, text):
         return " ".join(str(ord(char)) for char in text)
+    
 
 
     def getFilename(self):
