@@ -5,6 +5,8 @@ import CurveDB       as DB
 import PrivateKey    as PK
 import Filemanager   as FM
 import EllipticCurve as EC
+import ElGamal       as EL
+
 
 class Commandline(object):
 
@@ -98,10 +100,19 @@ class Commandline(object):
             else:
                 self.__display_error__("Select a key file -key 'filename'")
 
+            if args.text:
+                print("\nEnter the message:\n\n")
+                msg = input()
+                msg = str.encode(msg)
+
+
 
             prime = PR.Prime(prime)
             ec    = EC.EllipticCurve(a, b, prime)
             point = PO.Point(ec, gX, gY)
+            el    = EL.ElGamal(ec, point, msg)
+
+            data  = el.encrypt(msg, key)
 
 
             
