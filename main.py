@@ -1,9 +1,11 @@
 import sys
 import argparse
 import Commandline as CM
-import CurveDB     as DB
-import PrivateKey  as PK
-import Filemanager as FM
+    
+    
+    
+    
+    
 
 if __name__ == "__main__":
 
@@ -19,9 +21,9 @@ if __name__ == "__main__":
     
     # ecparam options
     ecparam.add_argument('-list_curves', help="Prints a list of all currently available curve 'short names'", action="store_true")
-    ecparam.add_argument('-name', type=str, nargs=1, help="Use the ec parameters with 'short name' name'", metavar=('arg'))
-    ecparam.add_argument('-genkey', help="Generate ec key'", action="store_true")
-    ecparam.add_argument('-out', type=str, nargs=1 , help="output file'", metavar=('arg'))
+    ecparam.add_argument('-name', type=str, nargs=1, help="Use the ec parameters with 'short name' name", metavar=('arg'))
+    ecparam.add_argument('-genkey', help="Generate ec key", action="store_true")
+    ecparam.add_argument('-out', type=str, nargs=1 , help="output file", metavar=('arg'))
 
 
     # Encrypt 
@@ -31,24 +33,5 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     
-    cm.run()
-
-    
-    db = DB.CurveDB()
-    fm = FM.Filemanager()
-    
-    if args.list_curves:
-        db.printDB()
-    if args.name:
-        curve = args.name[0]
-        db.printCurve(curve)
-    if args.genkey:
-        pk = PK.PrivateKey()
-        pk.generateKey()
-        key = pk.printKey()
-
-        if args.out:
-            fm.writeKey(key, args.out[0])
-        else:
-            print(key)
+    cm.run(args)
 
