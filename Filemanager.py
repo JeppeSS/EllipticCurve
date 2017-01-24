@@ -20,7 +20,7 @@ class Filemanager(object):
             openFile.close()
 
 
-    def writeKey(self, data, filename):
+    def writeOut(self, data, filename):
         with open(filename, 'w') as openFile:
             openFile.write(data)
 
