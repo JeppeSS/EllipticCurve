@@ -1,7 +1,10 @@
 import sys
-import CurveDB     as DB
-import PrivateKey  as PK
-import Filemanager as FM
+import Point         as PO
+import Prime         as PR
+import CurveDB       as DB
+import PrivateKey    as PK
+import Filemanager   as FM
+import EllipticCurve as EC
 
 class Commandline(object):
 
@@ -96,7 +99,11 @@ class Commandline(object):
                 self.__display_error__("Select a key file -key 'filename'")
 
 
+            prime = PR.Prime(prime)
+            ec    = EC.EllipticCurve(a, b, prime)
+            point = PO.Point(ec, gX, gY)
 
+            
         if args.out:
             fm.writeOut(data, args.out[0])
         else:
