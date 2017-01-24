@@ -24,11 +24,12 @@ class PrivateKey(object):
         key = self.getKey()
 
 
+        keyparse = '-----BEGIN EC PRIVATE KEY-----\n{}\n-----END EC PRIVATE KEY-----'.format(key.decode('utf8'))
 
 
-        print('-----BEGIN EC PRIVATE KEY-----')
-        print('{}'.format(key.decode('utf8')))
-        print('-----END EC PRIVATE KEY-----')
+        return keyparse
+
+
 
 
 
