@@ -3,7 +3,7 @@ import argparse
 import Commandline as CM
 import CurveDB     as DB
 import PrivateKey  as PK
-
+import Filemanager as FM
 
 if __name__ == "__main__":
 
@@ -35,6 +35,7 @@ if __name__ == "__main__":
 
     
     db = DB.CurveDB()
+    fm = FM.Filemanager()
     
     if args.list_curves:
         db.printDB()
@@ -44,8 +45,10 @@ if __name__ == "__main__":
     if args.genkey:
         pk = PK.PrivateKey()
         pk.generateKey()
-        pk.printKey()
-    if args.out:
-        print("output file")
+        key = pk.printKey()
 
+        if args.out:
+            fm.writeKey(key, args.out[0])
+        else:
+            print(key)
 
