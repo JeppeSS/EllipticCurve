@@ -143,7 +143,7 @@ class Point(object):
                 R = R.add(Q)
 
             Q = Q.double()
-            n = int(n / 2)
+            n = int(n // 2)
 
 
         return R
