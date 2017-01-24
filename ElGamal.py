@@ -58,7 +58,7 @@ class ElGamal(object):
 
 
     def genRandom(self):
-        num = os.urandom(15)
+        num = os.urandom(20)
 
         return int.from_bytes(num, byteorder='big')
 
