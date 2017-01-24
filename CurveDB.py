@@ -40,9 +40,13 @@ class CurveDB(object):
 
     def printDB(self):
         db = self.getDB()
+        
+        curves = ""
 
         for curve in db:
-            print(curve[0] + ": " + curve[1])
+            curves += '{}: {}\n'.format(curve[0], curve[1])
+
+        return curves
 
     def printCurve(self, name):
         curve = self.getCurve(name)
@@ -57,17 +61,20 @@ class CurveDB(object):
         gX    = hex(curve[5][0])
         gY    = hex(curve[5][1])
 
-        print("Field Type: Prime-field")
-        print("Prime:")
-        print("\t%s" % prime)
-        print("A:")
-        print("\t%s" % a)
-        print("B:")
-        print("\t%s" % b)
-        print("Generator:")
-        print("\t%s" % gX)
-        print("\t%s" % gY)
+
+
+        curveData  = "Field Type: Prime-field\n"
+        curveData += "Prime:\n"
+        curveData += "\t{}\n".format(prime)
+        curveData += "A:\n"
+        curveData += "\t{}\n".format(a)
+        curveData += "B:\n"
+        curveData += "\t{}\n".format(b)
+        curveData += "Generator:\n"
+        curveData += "\t{}\n".format(gX)
+        curveData += "\t{}\n".format(gY)
         
+        return curveData 
 
 
 
