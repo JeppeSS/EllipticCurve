@@ -1,8 +1,3 @@
-import EllipticCurve as EC
-import Prime as pri
-
-
-
 def xgcd(j, p):
     x0, x1, y0, y1 = 1, 0, 0, 1
 

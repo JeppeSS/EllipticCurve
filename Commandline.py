@@ -103,6 +103,7 @@ class Commandline(object):
             ec    = EC.EllipticCurve(a, b, prime)
             point = PO.Point(ec, gX, gY)
 
+
             
         if args.out:
             fm.writeOut(data, args.out[0])
