@@ -2,7 +2,6 @@ import Filemanager as fm
 import Prime as pri
 import EllipticCurve as EC
 import Point as po
-import numpy as np
 import os
 
 
