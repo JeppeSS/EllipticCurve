@@ -27,8 +27,12 @@ if __name__ == "__main__":
 
 
     # Encrypt 
-    ecnrypt = subparsers.add_parser('encrypt', help='Encrypt text or document')
-
+    encrypt = subparsers.add_parser('encrypt', help='Encrypt text or document')
+    
+    # encrypt options
+    encrypt.add_argument('-name', type=str, nargs=1, help="Specifies the input document file", metavar=('arg'))
+    encrypt.add_argument('-key', type=str, nargs=1, help="Specifies the input key file", metavar=('arg'))
+    encrypt.add_argument('-out', type=str, nargs=1 , help="output file", metavar=('arg'))
 
 
     args = parser.parse_args()
