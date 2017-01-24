@@ -1,6 +1,5 @@
 import os
 import base64
-import Filemanager as FM
 
 class PrivateKey(object):
 
