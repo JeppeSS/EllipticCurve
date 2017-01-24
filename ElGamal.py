@@ -136,16 +136,3 @@ class ElGamal(object):
         return flat
 
         
-
-
-
-f = fm.Filemanager('test.txt')
-data = f.getData()
-p = pri.Prime(4451685225093714772084598273548427)
-ec = EC.EllipticCurve(4451685225093714772084598273548424, 2061118396808653202902996166388514, p)
-point = po.Point(ec, 188281465057972534892223778713752, 3419875491033170827167861896082688)
-key = 4451685225093714772084598273548933
-el = ElGamal(ec, point, data)
-encr = el.encrypt(data, key)
-dec = el.decrypt(encr, key)
-f.writeData(dec, 'output')
