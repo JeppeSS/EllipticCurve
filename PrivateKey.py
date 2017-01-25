@@ -20,9 +20,7 @@ class PrivateKey(object):
         return key
 
 
-    def printKey(self):
-        key = self.getKey()
-
+    def printKey(self, key):
 
         keyparse  = '-----BEGIN EC PRIVATE KEY-----\n'
         keyparse += '{}\n-----END EC PRIVATE KEY-----'.format(key.decode('utf8'))

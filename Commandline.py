@@ -72,9 +72,9 @@ class Commandline(object):
 
             if args.genkey:
 
-                pk.generateKey()
+                key = pk.generateKey()
 
-                data = pk.printKey()
+                data = pk.printKey(key)
         
         if cmd[0] == 'encrypt':
             if args.name:
