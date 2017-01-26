@@ -40,13 +40,25 @@ if __name__ == "__main__":
     
     # encrypt options
     encrypt.add_argument('-name', type=str, nargs=1, 
-            help="Specifies the input document file", metavar=('arg'))
+            help="Use the ec parameters with 'short name'", metavar=('arg'))
     encrypt.add_argument('-key', type=str, nargs=1, 
             help="Specifies the input key file", metavar=('arg'))
     encrypt.add_argument('-out', type=str, nargs=1 ,
             help="output file", metavar=('arg'))
     encrypt.add_argument('-text', 
             help="Enter the message to encrypt", action="store_true")
+    encrypt.add_argument('-input', type=str, nargs=1, 
+            help="Specifies the input document file", metavar=('arg'))
+    
+    # decrypt 
+    decrypt = subparsers.add_parser('decrypt', help='Decrypt document')
+    
+    decrypt.add_argument('-key', type=str, nargs=1, 
+            help="Specifies the input key file", metavar=('arg'))
+    decrypt.add_argument('-out', type=str, nargs=1 ,
+            help="output file", metavar=('arg'))
+    decrypt.add_argument('-input', type=str, nargs=1, 
+            help="Specifies the input document file", metavar=('arg'))
 
     args = parser.parse_args()
     

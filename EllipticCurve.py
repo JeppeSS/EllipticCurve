@@ -45,6 +45,10 @@ class EllipticCurve(object):
         return yTest == xTest
 
 
+    def calcPos(self, x):
+        return x ** 3 + self.geta() * x + self.getb()
+
+
     def __repr__(self):
         return '[y^2 = x^3 + %dx + %d mod %d]]' % (self.geta(), self.getb()
                                                  , self.getPrime())

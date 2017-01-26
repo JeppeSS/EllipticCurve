@@ -1,3 +1,5 @@
+import base64
+
 class Filemanager(object):
     
 
@@ -16,6 +18,12 @@ class Filemanager(object):
 
             openFile.close()
 
+    def extractCurve(self, data):
+        data = data.decode('utf-8')
+        data = data.splitlines()
 
+        curvename = base64.b64decode(data[1])
+        curvename = curvename.decode()
 
+        return curvename, data[4:]
 

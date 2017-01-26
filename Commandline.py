@@ -71,9 +71,7 @@ class Commandline(object):
                 data      = db.printCurve(curveName)
 
             if args.genkey:
-
                 key = pk.generateKey()
-
                 data = pk.printKey(key)
         
         if cmd[0] == 'encrypt':
@@ -105,16 +103,43 @@ class Commandline(object):
                 msg = input()
                 msg = str.encode(msg)
 
+            if args.input:
+                msg = fm.readData(args.input[0])
 
 
             prime = PR.Prime(prime)
             ec    = EC.EllipticCurve(a, b, prime)
             point = PO.Point(ec, gX, gY)
-            el    = EL.ElGamal(ec, point, msg)
+            el    = EL.ElGamal(ec, point)
 
-            data  = el.encrypt(msg, key)
+            data  = el.encrypt(msg, key, curve[0])
 
+        if cmd[0] == 'decrypt':
+            
+            if args.key:
+                keyFile = fm.readData(args.key[0])
+                key     = pk.extractKey(keyFile)
+            else:
+                self.__display_error__("Select a key file -key 'filename'")
 
+            if args.input:
+                inp = fm.readData(args.input[0])
+
+            
+            curveName, msg = fm.extractCurve(inp)
+            curve     = db.getCurve(curveName)
+            
+            a     = curve[2]
+            b     = curve[3]
+            prime = curve[4]
+            gX    = curve[5][0]
+            gY    = curve[5][1]
+
+            prime = PR.Prime(prime)
+            ec    = EC.EllipticCurve(a, b, prime)
+            point = PO.Point(ec, gX, gY)
+            el    = EL.ElGamal(ec, point)
+            data  = el.decrypt(msg, key)
             
         if args.out:
             fm.writeOut(data, args.out[0])
