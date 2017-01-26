@@ -1,6 +1,3 @@
-import Filemanager as FM
-import Prime as PRI
-import EllipticCurve as EC
 import Point as PO
 import os
 import base64
@@ -83,33 +80,46 @@ class ElGamal(object):
     def encrypt(self, data, key, curveName):
 
 
-        data = list(data)
+        data      = list(data)
         prime     = self.getPrime()
         primeSize = prime.bit_length()
         curve     = self.getCurve()
 
 
-        M = int((primeSize - 8) / 8)
+        M         = int((primeSize - 8) / 8)
         
         partition = self.partition(data, M)
-        binaryData = []
-        
 
+
+        binaryData = [] 
         for index in partition:
             binaryData.append([bin(x)[2:].zfill(8) for x in index])
+
         
-        print(binaryData)
+        lengthBinary = len(binaryData[-1])
+ 
+        while lengthBinary < M:
+            binaryData[-1].append('00000000')
+            lengthBinary = len(binaryData[-1])
+
+ 
         
         sample = []
         for index in binaryData:
             index.append('00000000')
+            
             asString = ''.join(index)
 
+            sample.append(asString)
 
-            sample.append(int(asString, 2))
-    
+
+        toInt = []
+        for i in sample:
+            toInt.append(int(i, 2))
+
+
         points = []
-        for index in sample:
+        for index in toInt:
             y = curve.calcPos(index)
             test = self.tonelli(y, prime)
             
@@ -123,21 +133,21 @@ class ElGamal(object):
             if curve.pointTest(index, test):
                 p = PO.Point(curve, index, test)
                 points.append(p)
-           
 
-        point = self.getPoint()
+
+
+        point  = self.getPoint()
         random = self.genRandom()
 
-        pB = point.double_and_add(key)
-        c1 = point.double_and_add(random)
-
-
+        pB  = point.double_and_add(key)
+        c1  = point.double_and_add(random)
         kpB = pB.double_and_add(random)
         
         c2 = []
         for i in points:
              c2.append(kpB.add(i))
-        
+
+ 
         c1 = '{}:{}'.format(c1.getX(), c1.getY())
         c1 = base64.b64encode(str.encode(c1))
 
@@ -170,15 +180,19 @@ class ElGamal(object):
         c1 = base64.b64decode(data[1])
         c1 = c1.decode()
         c1 = c1.split(":")
-        c1 = PO.Point(curve, int(c1[0]), int(c1[1]))
+        
+        c1    = PO.Point(curve, int(c1[0]), int(c1[1]))
         c1Key = c1.double_and_add(key)
-
+        
         length = len(data)
-        msg = data[5: length - 1]
+        msg    = data[5: length - 1]
         
         
-        prime = self.getPrime()
+        prime       = self.getPrime()
+        primelength = prime.bit_length()
 
+        bitSize = "{0:0%sb}" % primelength
+        
         decode = []
         for i in msg:
             p = base64.b64decode(i)
@@ -191,42 +205,35 @@ class ElGamal(object):
             points.append(PO.Point(curve, int(p[0]), int(p[1])))
 
        
+
+        p2 = c1Key.__inv__()
+
         pointsCalc = []
-
-        y = (-c1Key.getY()) % prime
-
-        
-        p2 = PO.Point(curve, c1Key.getX(), y)
         for i in points:
             pointsCalc.append(i.add(p2))
 
         binaryN = []
-
         for i in pointsCalc:
             x = i.getX()
-            binary = (bin(x)[2:][:-7])
             
-            #parti  = (self.partition(binary, 8))
+            binary = bitSize.format(x)[:-8]
 
-            #for j in parti:
-                #binaryN.append(j)
-            
             binaryN.append(binary)
- 
-        #del binaryN[-1]
+
 
         samp = ''.join(binaryN)
-        samp2 = '0' + samp 
         
 
-        parti = (self.partition(samp2, 8))
+        parti = (self.partition(samp, 8))
         
-        print(parti)
-        
-        toStr = []
+        toStr = []        
         for i in parti:
             toInt = int(i, 2)
             toStr.append(chr(toInt))
+
+
+        while toStr[-1] == '\x00':
+            del toStr[-1]
         
 
         return ''.join(toStr)
