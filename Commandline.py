@@ -2,7 +2,7 @@ import sys
 import Point         as PO
 import Prime         as PR
 import CurveDB       as DB
-import PrivateKey    as PK
+import PublicKey     as PK
 import Filemanager   as FM
 import EllipticCurve as EC
 import ElGamal       as EL
@@ -53,7 +53,7 @@ class Commandline(object):
     def parse(self, args):
         db = DB.CurveDB()
         fm = FM.Filemanager()
-        pk = PK.PrivateKey()
+        pk = PK.PublicKey()
         
 
         cmd = self.__getCmd__()
