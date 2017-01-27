@@ -20,8 +20,7 @@ class Point(object):
         self.__y__  = y
         
         self.__EC__ = curve
-        
-        if x != 0 and y != 0:
+        if x != 0 and y != 0:        
             if not self.__EC__.pointTest(self.__x__, self.__y__):
                 raise Exception('The point is not valid!')
 
