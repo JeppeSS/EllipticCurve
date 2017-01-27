@@ -46,7 +46,7 @@ class EllipticCurve(object):
 
 
     def calcPos(self, x):
-        return x ** 3 + self.geta() * x + self.getb()
+        return (x ** 3 + self.geta() * x + self.getb()) % self.getPrime()
 
 
     def __repr__(self):
