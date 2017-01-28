@@ -1,8 +1,3 @@
-import EllipticCurve as EC
-import Prime as pri
-
-
-
 def xgcd(j, p):
     x0, x1, y0, y1 = 1, 0, 0, 1
 
@@ -25,8 +20,7 @@ class Point(object):
         self.__y__  = y
         
         self.__EC__ = curve
-        
-        if x != 0 and y != 0:
+        if x != 0 and y != 0:        
             if not self.__EC__.pointTest(self.__x__, self.__y__):
                 raise Exception('The point is not valid!')
 
@@ -36,9 +30,12 @@ class Point(object):
 
     def getY(self):
         return self.__y__
-    
+
     def getCoords(self):
         return (self.getX(), self.getY())
+    
+    def getCurve(self):
+        return self.__EC__
 
     def setX(self, x):
         self.__x__ = x
@@ -52,6 +49,17 @@ class Point(object):
 
     def __eq__(self, Q):
         return (self.getX(), self.getY()) == (Q.getX(), Q.getY())
+
+    def __inv__(self):
+        
+        curve = self.getCurve()
+        prime = curve.getPrime()
+
+        x    = self.getX()
+        y    = self.getY()
+        newY = (-y) % prime 
+
+        return Point(curve, x, newY) 
 
     def div(self, i, j, p):
         e = xgcd(j, p)
@@ -72,7 +80,7 @@ class Point(object):
         if self.getX() == Q.getX():
             raise Exception('If x1 == x2 the point does not exist')
 
-        curve = self.__EC__
+        curve = self.getCurve()
         prime = curve.getPrime()
 
         sY = (self.getY() - Q.getY()) % prime
@@ -86,38 +94,6 @@ class Point(object):
         return Point(curve, rX, rY)
 
 
-    def sub(self, x, y):
-
-
-        curve = self.__EC__
-        prime = curve.getPrime()
-
-        sY = (self.getY() - y) % prime
-        sX = (self.getX() - x) % prime
-
-        s = self.div(sY, sX, prime)
-
-        rX = ((s ** 2) - self.getX() - x) % prime
-        rY = (s * (self.getX() - rX) - self.getY()) % prime
-
-        return [rX, rY]
-
-
-    def sub2(self, x1, y1, x, y):
-
-
-        curve = self.__EC__
-        prime = curve.getPrime()
-
-        sY = (y1 - y) % prime
-        sX = (x1 - x) % prime
-
-        s = self.div(sY, sX, prime)
-
-        rX = ((s ** 2) - x1 - x) % prime
-        rY = (s * (x1 - rX) - y1) % prime
-
-        return [rX, rY]
 
     def double(self):
         curve = self.__EC__
@@ -148,13 +124,11 @@ class Point(object):
                 R = R.add(Q)
 
             Q = Q.double()
-            n = int(n / 2)
+            n = int(n // 2)
 
 
         return R
 
     def __repr__(self):
         return '[x = %d, y = %d]' % (self.getX(), self.getY())
-
-
 

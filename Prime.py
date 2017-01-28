@@ -1,6 +1,5 @@
 import random
 
-
 def gcd(x, y):
     """ Greatest common divisor, the Euclidean Algorithm 
     

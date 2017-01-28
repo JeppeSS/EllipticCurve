@@ -1,43 +1,29 @@
+import base64
+
 class Filemanager(object):
     
-    __filename__ = None
-    __data__     = None
 
-    def __init__(self, filename):
-        self.__filename__ = filename
-
-        self.__data__ = self.readData()
-        
-
-    def readData(self):
-        with open(self.getFilename(), 'r') as openFile:
-            data = list(openFile.read())
+    def readData(self, filename):
+        with open(filename, 'rb') as openFile:
+            data = openFile.read()
 
             openFile.close()
 
-            data = self.convertAscii(data)
-
-        return data.split()
-
-    def writeData(self, data, name):
-        with open(name + '.txt', "w") as openFile:
-            data = self.convertString(data)
-            openFile.write(data) 
+        return data
 
 
-    def convertString(self, text):
-        return ''.join(chr(i) for i in text)
-    
+    def writeOut(self, data, filename):
+        with open(filename, 'w') as openFile:
+            openFile.write(data)
 
-    def convertAscii(self, text):
-        return " ".join(str(ord(char)) for char in text)
-    
+            openFile.close()
 
+    def extractCurve(self, data):
+        data = data.decode('utf-8')
+        data = data.splitlines()
 
-    def getFilename(self):
-        return self.__filename__
+        curvename = base64.b64decode(data[1])
+        curvename = curvename.decode()
 
-    def getData(self):
-        return self.__data__
-
+        return curvename, data[4:]
 
