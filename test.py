@@ -24,7 +24,6 @@ class TestEC(unittest.TestCase):
         
         
         self.assertTrue(pri.Prime(2))
-        self.assertTrue(pri.Prime(2))
         self.assertTrue(pri.Prime(15485863))
 
     def test_EC(self):

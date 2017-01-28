@@ -1,44 +1,54 @@
 import random
+import math
 
-def gcd(x, y):
-    """ Greatest common divisor, the Euclidean Algorithm 
-    
-    Uses while loop insted of recursion to optimize speed.
-    Python works slow with recursion.
+def choose_k_and_q(n):
+    """
+    Tool for choosing n-1 = 2**k * q needed in Miller-Rabin test
+    :param n: Possible prime
+    :return: q -(odd integer) and k -(integer)
+    """
+    t = n - 1
+    last_number = 0
+
+    x = 1
+    while x < n:
+        try:
+            if t % (2 ** x) != 0:
+                break
+            else:
+                last_number = x
+        except:
+            break
+        x += 1
+    k = last_number
+    q = t // (2 ** k)
+    return k, q
 
 
-    Args:
-        x (int): Positive integer
-        y (int): Positive integer, x >= y
+def miller_rabin_test(n, a):
+    """
+    The Miller-Rabin test (almost as given in the book)
+    :param n: Integer to be tested
+    :param a: Potential witness to n
+    :return: Returns true if n is (probably not) a composit number - else false
     """
 
+    if n % 2 == 0 or 1 < math.gcd(a, n) < n:
+        return False
+    k, q = choose_k_and_q(n)
+    a = pow(a, q, n)
+    if a % n == 1:
+        return True
+    i = 0
+    while i <= k:
+        if (a % n) == 1:
+            return True
+        a = pow(a, 2, n)
+        i += 1
+        if (i % 10) == 0:
+            print(i)
+    return False
 
-    if (x <= 0) or (y <= 0):
-        raise Exception('Arguments must be positive')
-
-
-    while y != 0:
-        x, y = y, x % y
-
-    return x
-
-
-def fermat(a, p):
-    """ Fermat's little theorem
-
-    If p is a prime number, then for any integer a:
-
-    a ** (p - 1) ≡ 1 mod p
-
-    This is not always the case!
-
-
-    Args:
-        a (int): Number to test
-        p (int): The prime number you want to test 
-    """
-
-    return pow(a, p - 1, p)
 
 
 class Prime(object):
@@ -61,35 +71,43 @@ class Prime(object):
         self.__number__ = number
 
 
-        if not self.isPrime():
+        if not self.test_if_prime(number, 100):
             raise Exception('The prime is not valid!')
 
 
     def getNumber(self):
         return self.__number__
-
-
-    def isPrime(self, numTest=50):
-        p = self.__number__
-
-        if p == 1:
+    
+    
+    def test_if_prime(self, n, k):
+        """
+        Tests if a given value is prime
+        :param n: integer to be tested
+        :param k: number of times to test by Miller-Rabin test
+        :return: boolean - true if n=prime - else false
+        """
+        
+        if n == 1:
             return False
 
-        if numTest >= p:
-            numTest = p - 1
+        if n == 2:
+            return True
 
 
-        for i in range(numTest):
-            test = random.randint(1, p - 1)
-           
-            if (gcd(test, p) != 1):
-                return False
+        b = False
+        c = 0
+        while c < k:
+            c += 1
+            test_val = random.randint(2, (n - 2))
+            b = miller_rabin_test(n, test_val)
+            if not b:
+                break
+        return b
 
-            if fermat(test, p) != 1:
-                return False
-
-        return True
 
 
     def __repr__(self):
         return '[P = %d]' % self.getNumber()
+
+
+
