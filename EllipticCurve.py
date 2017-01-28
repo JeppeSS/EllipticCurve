@@ -1,5 +1,18 @@
 class EllipticCurve(object):
-    
+    """
+    Elliptic curve object, represents a curve
+    over a finite field. If the curve is a singularity 
+    raise exception.
+
+
+    y^2 = x^3 + ax + b
+
+
+    Args:
+        a     (int): Curve a value
+        b     (int): Curve b value
+        prime (int): Prime value over the curve
+    """
     __a__     = None
     __b__     = None
     __prime__ = None
@@ -35,6 +48,13 @@ class EllipticCurve(object):
 
 
     def pointTest(self, x, y):
+        """
+        Test if points are in the finite field.
+
+        Args:
+            x (int): x-coordinate
+            y (int): y-coordinate
+        """
 
         if x > self.getPrime() or y > self.getPrime():
             raise Exception('Coordinates must be less than the prime')
@@ -46,6 +66,13 @@ class EllipticCurve(object):
 
 
     def calcPos(self, x):
+        """
+        Calculate the y value, the x value is not neseccary part of the
+        finite field.
+
+        Args:
+            x (int): x-coordinate
+        """
         return (x ** 3 + self.geta() * x + self.getb()) % self.getPrime()
 
 

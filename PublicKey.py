@@ -2,6 +2,9 @@ import os
 import base64
 
 class PublicKey(object):
+    """
+    Generates a 256-bit public key and convert to base64
+    """
 
     def generateKey(self, size = 256):
         key = os.urandom(size)

@@ -9,7 +9,10 @@ import ElGamal       as EL
 
 
 class Commandline(object):
-
+    """
+    Commandline acts as a exception handler
+    and control commandline utilities.
+    """
 
     __commands__ = None
 

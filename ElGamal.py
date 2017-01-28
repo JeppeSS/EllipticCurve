@@ -3,7 +3,13 @@ import os
 import base64
 
 class ElGamal(object):
+    """
+    ElGamal encryption / decryption method. 
 
+    Args:
+        curve (EllipticCurve): A curve over a finite field
+        point (Point)        : A point inside the finite field
+    """
     __curve__ = None
     __point__ = None
     __prime__ = None
@@ -19,6 +25,9 @@ class ElGamal(object):
 
 
     def partition(self, data, length):
+        """
+        Splits the data into length pieces.
+        """
         return [data[i:i + length] for i in range(0, len(data), length)] 
     
     def getPrime(self):
@@ -33,15 +42,28 @@ class ElGamal(object):
 
 
     def genRandom(self):
+        """
+        Generates a 256-bit random number with system noise.
+        return it as a integer.
+        """
         num = os.urandom(256)
 
         return int.from_bytes(num, byteorder='big')
     
     
+
     def legendre(self, a, p):
         return pow(a, (p - 1) // 2, p)
-     
+    
+
     def tonelli(self, n, p):
+        """
+        Tonelli-Shanks algorithm test for quadratic residues
+
+        code source: https://rosettacode.org/wiki/Tonelli-Shanks_algorithm
+
+        return 0 if non-qudratic residues
+        """
         if self.legendre(n, p) != 1:
             return 0
 
@@ -78,7 +100,16 @@ class ElGamal(object):
    
 
     def encrypt(self, data, key, curveName):
+        """
+        Encryption method
 
+        Converts message to binary and split into M chunks.
+        These chunks are formatted to integers used to represent 
+        x-coordinates. 
+
+        Tonelli-shanks algorithm tests to see if quadratic residues
+        if not, increment by one and try again.
+        """
 
         data      = list(data)
         prime     = self.getPrime()
@@ -174,6 +205,11 @@ class ElGamal(object):
 
 
     def decrypt(self, data, key):
+        """
+        Decryption method, extract c1 from the data
+        multiply with key and subtract from each message
+        partition. Convert to string again.
+        """
         
         curve = self.getCurve()
 

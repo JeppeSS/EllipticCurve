@@ -1,4 +1,11 @@
 def xgcd(j, p):
+    """
+    Extended Euclidean algorithm
+    implemented as Iterative algorithm to optimize speed.
+    
+
+    Code source: https://en.wikibooks.org/wiki/Algorithm_Implementation/Mathematics/Extended_Euclidean_algorithm
+    """
     x0, x1, y0, y1 = 1, 0, 0, 1
 
     while p != 0:
@@ -9,6 +16,12 @@ def xgcd(j, p):
     return j, x0, y0
 
 class Point(object):
+    """
+    Point object
+
+    If x == 0 and y == 0, the point represents infinity
+    If the point is does not exists in the finite field raise exception
+    """
     __x__  = None
     __y__  = None
 
@@ -48,9 +61,17 @@ class Point(object):
         self.__y__ = y
 
     def __eq__(self, Q):
+        """
+        Test if two points are equal
+        """
         return (self.getX(), self.getY()) == (Q.getX(), Q.getY())
 
     def __inv__(self):
+        """
+        Takes the inverse of a point
+
+        (x, y) = (x, -y)
+        """
         
         curve = self.getCurve()
         prime = curve.getPrime()
@@ -62,12 +83,20 @@ class Point(object):
         return Point(curve, x, newY) 
 
     def div(self, i, j, p):
+        """
+        Division with modular arithmetic
+        """
         e = xgcd(j, p)
         d = i * e[1]
 
         return d % p
 
     def add(self, Q):
+        """
+        Point addion, following the addion laws. 
+        If P == Q, then do point doubling insted.
+        returns a new point inside the finite field.
+        """
         if self.__eq__(Q):
             return self.double()
 
@@ -96,6 +125,10 @@ class Point(object):
 
 
     def double(self):
+        """
+        Point doubling. 
+        returns a new point in the finite field.
+        """
         curve = self.__EC__
         prime = curve.getPrime()
         a     = curve.geta()
@@ -115,6 +148,14 @@ class Point(object):
 
 
     def double_and_add(self, n):
+        """
+        The discrete logarithm problem. Double_and_add,
+        doubles the point n times.
+
+        Uses n//2 to work with arbitary large integers.
+
+        returns a new point in the finite field.
+        """
         Q = self
         R = Point(self.__EC__, 0, 0)
 

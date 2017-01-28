@@ -62,7 +62,7 @@ class Prime(object):
 
     def __init__(self, number):
         """
-        Initialize a "prime" number, the objects does not automaticlly check
+        Initialize a "prime" number, the objects does automaticlly check
         if the number is actually prime.
 
         Args:
